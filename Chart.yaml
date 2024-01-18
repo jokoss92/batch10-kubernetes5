@@ -1,0 +1,5 @@
+apiVersion: v2
+name: myApp
+version: "1.0"
+description: "My App"
+appVersion: "1.0"

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-post-upgrade"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ .Release.Name }}
+        image: "aditirvan/curl:1.0"
+        command: 
+        - curl 
+        - -i 
+        - -H 
+        - "Accept: application/json" 
+        - -H 
+        - "Content-Type:application/json" 
+        - -X 
+        - POST 
+        - --data 
+        - "{\"content\": \"App deployed via Helm {{ .Release.Name }}\"}" 
+        - https://discord.com/api/webhooks/1192462814288281670/oi3y-gFpuPGGXg7RWAX2ODA5eWr66Wv_uyJfFQg-tquHPlO3qWh7A4DfjfXqcASqtAFB

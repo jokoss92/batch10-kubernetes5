@@ -1,0 +1,5 @@
+.helmignore
+.git
+.env
+.*.conf
+mydir/
